@@ -6,14 +6,15 @@ data=pd.read_csv("http://hosho.ees.hokudai.ac.jp/~kubo/stat/iwanamibook/fig/hbm/
 
 #種子の数yごとに集計、グラフとして表示すると
 plt.bar(range(9),data.groupby('y').sum().id)
+plt.savefig("output2/first.png")
 data.groupby('y').sum().T
 
 #dataの制限
 Y=np.array(data.y)[:6]
 
 import numpy as np
-import pymc as pm
-import theano.tensor as T 
+import pymc3 as pm
+import theano.tensor as T
 def invlogit(v):
 	return T.exp(v)/(T.exp(v)+1)
 
@@ -29,3 +30,4 @@ with pm.Model() as model_hier:
 
 with model_hier:
 	pm.traceplot(trace_hier, model_hier.vars)
+	plt.savefig("output2/simple_linear_trace.png")

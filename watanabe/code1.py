@@ -4,7 +4,7 @@ N=40
 X=np.random.uniform(10,size=N)
 Y=X*30+4+np.random.normal(0,16,size=N)
 plt.plot(X,Y,"o")
-plt.savefig("output/code1-fig1.png")
+plt.savefig("output1/code1-fig1.png")
 
 import pymc3 as pm
 import time
@@ -35,7 +35,7 @@ with model:
 		trace=merge_traces(ts)
 	if(saveimage):
 		pm.traceplot(trace)
-		plt.savefig("output/simple_linear_trace.png")
+		plt.savefig("output1/simple_linear_trace.png")
 	print ("Rhat="+str(pm.gelman_rubin(trace)))
 
 t1=time.clock()

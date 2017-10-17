@@ -10,8 +10,8 @@ nc=nikkei['Close Price'][:600]
 returns=(np.log(nc).shift()-np.log(nc))
 
 nc.plot(figsize=(30,15),title="Close Price of NIKKEI index")
-#plt.show()
-plt.savefig("output/code4-fig2.png")
+plt.show()
+#plt.savefig("output/code4-fig2.png")
 returns.plot(title='return of NIKKEI index close price',figsize=(30,8))
 
 nreturns=np.array(returns[1:])[::-1]
@@ -45,5 +45,5 @@ exps=np.exp(trace[s][::10].T)
 plt.plot(returns[:600][::-1])
 plt.plot( exps, 'r', alpha=.03)
 plt.plot(-exps, 'r', alpha=.03)
-plt.savefig("output/code4-fig1.png")
-#plt.show()
+#plt.savefig("output/code4-fig1.png")
+plt.show()
