@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 import numpy as np
 
 import pandas as pd
@@ -10,13 +10,14 @@ nc=nikkei['Close Price'][:600]
 returns=(np.log(nc).shift()-np.log(nc))
 
 nc.plot(figsize=(30,15),title="Close Price of NIKKEI index")
-plt.show()
+#plt.show()
+plt.savefig("output/code4-fig2.png")
 returns.plot(title='return of NIKKEI index close price',figsize=(30,8))
 
 nreturns=np.array(returns[1:])[::-1]
 
-import pymc as pm
-from pymc.distributions.timeseries import GaussianRandomWalk
+import pymc3 as pm
+from pymc3.distributions.timeseries import GaussianRandomWalk
 from scipy.sparse import csc_matrix
 from scipy import optimize
 
@@ -31,7 +32,7 @@ with pm.Model() as model:
 with model:
     start = pm.find_MAP(vars=[s], fmin=optimize.fmin_l_bfgs_b)
     step  = pm.NUTS(scaling=start)
-    trace = pm.sample(2000, step, start,progressbar=False)   
+    trace = pm.sample(2000, step, start,progressbar=False)
 
 plt.plot(trace[s][::10].T,'b', alpha=.03)
 plt.title('log volatility')
@@ -42,6 +43,7 @@ with model:
 
 exps=np.exp(trace[s][::10].T)
 plt.plot(returns[:600][::-1])
-plt.plot( exps, 'r', alpha=.03);
-plt.plot(-exps, 'r', alpha=.03);
-plt.show()
+plt.plot( exps, 'r', alpha=.03)
+plt.plot(-exps, 'r', alpha=.03)
+plt.savefig("output/code4-fig1.png")
+#plt.show()

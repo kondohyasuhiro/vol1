@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 import numpy as np
 
 import pandas as pd
@@ -12,17 +12,18 @@ data.groupby('y').sum().T
 Y=np.array(data.y)[:6]
 
 import numpy as np
-import pymc as pm import theano.tensor as T 
+import pymc as pm
+import theano.tensor as T 
 def invlogit(v):
 	return T.exp(v)/(T.exp(v)+1)
 
-with pm.Model() as model_hier: 
-	s=pm.Uniform('s',0,1.0E+2) 
+with pm.Model() as model_hier:
+	s=pm.Uniform('s',0,1.0E+2)
 	beta=pm.Normal('beta',0,1.0E+2)
-	r=pm.Normal('r',0,s,shape=len(Y)) 
-	q=invlogit(beta+r) 
+	r=pm.Normal('r',0,s,shape=len(Y))
+	q=invlogit(beta+r)
 	y=pm.Binomial('y',8,q,observed=Y)
-	
+
 	step = pm.Slice([s,beta,r])
 	trace_hier = pm.sample(10000, step)
 
