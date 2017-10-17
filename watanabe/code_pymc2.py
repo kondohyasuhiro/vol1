@@ -1,4 +1,4 @@
-mport numpy as np
+import numpy as np
 import pymc as pm
 
 @pm.deterministic

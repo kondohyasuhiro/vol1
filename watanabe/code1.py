@@ -4,6 +4,7 @@ N=40
 X=np.random.uniform(10,size=N)
 Y=X*30+4+np.random.normal(0,16,size=N)
 plt.plot(X,Y,"o")
+plt.savefig("output/code1-fig1.png")
 
 
 import pymc as pm
@@ -34,10 +35,10 @@ with model:
 		trace=merge_traces(ts)
 	if(saveimage): 
 		pm.traceplot(trace).savefig("simple_linear_trace.png")
-	print "Rhat="+str(pm.gelman_rubin(trace))
+	print ("Rhat="+str(pm.gelman_rubin(trace)))
 		
 t1=time.clock()
-print "elapsed time="+str(t1-t0)
+print ("elapsed time="+str(t1-t0))
 
 #trace
 if(not multicore):
