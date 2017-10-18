@@ -5,7 +5,7 @@ import pandas as pd
 data=pd.read_csv("http://hosho.ees.hokudai.ac.jp/~kubo/stat/iwanamibook/fig/hbm/data7a.csv")
 
 #種子の数yごとに集計、グラフとして表示すると
-plt.bar(range(9),data.groupby('y').sum().id)
+plt.bar(range(9),data.groupby('y').count().id)
 plt.savefig("output2/first.png")
 data.groupby('y').sum().T
 

@@ -21,7 +21,8 @@ chainnum=3
 with pm.Model() as model:
 	alpha = pm.Normal('alpha', mu=0, sd=20)
 	beta = pm.Normal('beta', mu=0, sd=20)
-	sigma = pm.Uniform('sigma', lower=0)
+	# default upper=1
+	sigma = pm.Uniform('sigma', lower=0, upper = 40)
 	y = pm.Normal('y', mu=beta*X + alpha, sd=sigma, observed=Y)
 	start = pm.find_MAP()
 	step = pm.NUTS()
@@ -48,7 +49,7 @@ with model:
 	pm.traceplot(trace,model.vars)
 
 pm.forestplot(trace)
-
+"""
 import pickle as pkl
 with open("simplelinearregression_model.pkl","w") as fpw:
 	pkl.dump(model,fpw)
@@ -58,3 +59,4 @@ with open("simplelinearregression_model.pkl") as fp:
 	model=plk.load(fp)
 with open("simplelinearregression_trace.pkl") as fp:
 	trace=plk.load(fp)
+"""
