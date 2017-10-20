@@ -30,7 +30,8 @@ with model_disaster:
 	trace_disaster = pm.sample(n, tune=500, start=start, step=[step1, step2],progressbar=False)
 
 with model_disaster:
-	pm.traceplot(trace_disaster,model_disaster.vars)
+    pm.summary(trace_disaster)
+    pm.traceplot(trace_disaster,model_disaster.vars)
 
 #結果の重ね書き
 #xrange is for python 2.6

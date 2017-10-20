@@ -36,7 +36,7 @@ with model:
 		trace=merge_traces(ts)
 	if(saveimage):
 		pm.traceplot(trace)
-		plt.savefig("output1/simple_linear_trace.png")
+		#plt.savefig("output1/simple_linear_trace.png")
 	print ("Rhat="+str(pm.gelman_rubin(trace)))
 
 t1=time.clock()
@@ -47,8 +47,8 @@ if(not multicore):
 	trace=ts[0]
 with model:
 	pm.traceplot(trace,model.vars)
-
-pm.forestplot(trace)
+	pm.forestplot(trace)
+	pm.summary(trace)
 """
 import pickle as pkl
 with open("simplelinearregression_model.pkl","w") as fpw:
