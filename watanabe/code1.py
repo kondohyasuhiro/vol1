@@ -1,17 +1,20 @@
 import matplotlib.pyplot as plt
 import numpy as np
+
+multicore=True
+saveimage=False
+
 N=40
 X=np.random.uniform(10,size=N)
 Y=X*30+4+np.random.normal(0,16,size=N)
 plt.plot(X,Y,"o")
-plt.savefig("output1/code1-fig1.png")
+if(saveimage):
+	plt.savefig("code1-fig1.png")
 
 import pymc3 as pm
 import time
 from pymc3.backends.base import merge_traces
 
-multicore=True
-saveimage=True
 
 itenum=1000
 t0=time.clock()
@@ -34,9 +37,10 @@ with model:
 	else:
 		ts=[pm.sample(itenum, step, chain=i, progressbar=False) for i in range(chainnum)]
 		trace=merge_traces(ts)
+
+	pm.traceplot(trace)
 	if(saveimage):
-		pm.traceplot(trace)
-		#plt.savefig("output1/simple_linear_trace.png")
+		plt.savefig("c1-simple_linear_trace.png")
 	print ("Rhat="+str(pm.gelman_rubin(trace)))
 
 t1=time.clock()
@@ -47,7 +51,11 @@ if(not multicore):
 	trace=ts[0]
 with model:
 	pm.traceplot(trace,model.vars)
+	if(saveimage):
+		plt.savefig("c1-trace.png")
 	pm.forestplot(trace)
+	if(saveimage):
+		plt.savefig("c1-forest.png")
 	pm.summary(trace)
 """
 import pickle as pkl

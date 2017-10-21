@@ -2,14 +2,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import pandas as pd
+
+saveimage=False
+
 data=pd.read_csv("http://hosho.ees.hokudai.ac.jp/~kubo/stat/iwanamibook/fig/hbm/data7a.csv")
 
 #種子の数yごとに集計、グラフとして表示すると
 ## from sum to count
 plt.bar(range(9),data.groupby('y').count().id)
 plt.show()
-plt.savefig("output2/first.png")
-data.groupby('y').count().T
+if(saveimage):
+	plt.savefig("c2-first.png")
 
 #dataの制限
 Y=np.array(data.y)[:100]
@@ -36,7 +39,5 @@ with model_hier:
 	pm.summary(trace_hier)
 	pm.traceplot(trace_hier, model_hier.vars)
 	pm.forestplot(trace_hier, varnames = ["s","beta"])
-	#plt.savefig("output2/simple_linear_trace.png")
-
-#with model_hier:
-#	plt.bar(range(9), trace_hier[y]);
+	if(saveimage):
+		plt.savefig("c2-simple_linear_trace.png")
